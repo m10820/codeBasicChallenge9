@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/muska/Desktop/C9_Input_Files/dataset/ee.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="pragmas browser query structure" current="2"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="3964"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,15:mainincremental_rev"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Store performance analysis sql" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="120"/><column index="2" value="178"/><column index="3" value="114"/><column index="4" value="79"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="city_table" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="88"/><column index="2" value="81"/><column index="3" value="120"/><column index="4" value="129"/><column index="5" value="103"/><column index="6" value="115"/><column index="7" value="191"/><column index="8" value="177"/><column index="9" value="98"/><column index="10" value="120"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="dim_campaigns" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="120"/><column index="2" value="151"/><column index="3" value="99"/><column index="4" value="91"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="dim_products" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="129"/><column index="2" value="300"/><column index="3" value="139"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="dim_stores" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="81"/><column index="2" value="120"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="fact_events" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="7" mode="1"/></sort><column_widths><column index="1" value="88"/><column index="2" value="81"/><column index="3" value="120"/><column index="4" value="129"/><column index="5" value="103"/><column index="6" value="115"/><column index="7" value="191"/><column index="8" value="177"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="incremental_rev" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="129"/><column index="2" value="162"/><column index="3" value="147"/><column index="4" value="108"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="ir%" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="4" mode="0"/></sort><column_widths><column index="1" value="129"/><column index="2" value="162"/><column index="3" value="147"/><column index="4" value="108"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="isu" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="156"/><column index="2" value="141"/><column index="3" value="139"/><column index="4" value="120"/><column index="5" value="102"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="isu%" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="7" mode="1"/></sort><column_widths><column index="1" value="59"/><column index="2" value="59"/><column index="3" value="139"/><column index="4" value="119"/><column index="5" value="130"/><column index="6" value="118"/><column index="7" value="102"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="prod_cat" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="88"/><column index="2" value="81"/><column index="3" value="120"/><column index="4" value="129"/><column index="5" value="103"/><column index="6" value="115"/><column index="7" value="191"/><column index="8" value="177"/><column index="9" value="146"/><column index="10" value="300"/><column index="11" value="139"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="StorePerformance.sql">-- ###store performance analysis;
+
+-- #Q1 top 10 stores by incremental revenue;
+SELECT store_id,promo_type,SUM(AfterPromoQtySold*base_price)as totalSale 
+FROM fact_events GROUP BY store_id ORDER BY totalSale DESC LIMIT 10;
+
+
+-- #Q2 bottom 10 stores by incremental sold units
+SELECT store_id, SUM(AfterPromoQtySold) as totalUnit 
+FROM fact_events GROUP BY store_id ORDER BY totalUnit  LIMIT 10;
+
+
+-- #Q3 #total of before and after sale ;
+SELECT store_id, SUM(BeforePromoQtySold*base_price)as BeforetotalSale,
+ SUM(AfterPromoQtySold*base_price)as AftertotalSale 
+ FROM fact_events GROUP BY store_id;
+ 
+
+-- #below is net differnce in sales after and before promotion in stores;
+ SELECT fact_events.store_id,dim_stores.city,
+ SUM((AfterPromoQtySold-BeforePromoQtySold)*base_price) AS TotalSaleDifference  
+ FROM fact_events JOIN dim_stores ON fact_events.store_id = dim_stores.store_id 
+ GROUP by fact_events.store_id ORDER by TotalSaleDifference DESC ;
+ 
+ 
+--  #below is net differnce in sales after and before promotion in entirecity;
+ SELECT dim_stores.city,
+ SUM((AfterPromoQtySold-BeforePromoQtySold)*base_price) AS TotalSaleDifference  
+ FROM fact_events JOIN dim_stores ON fact_events.store_id = dim_stores.store_id 
+ GROUP by dim_stores.city ORDER by TotalSaleDifference DESC;
+ 
+ 
+--  #below is net differnce in sales after and before promotion in entirecity by stores;
+ SELECT fact_events.store_id,dim_stores.city,
+ SUM((AfterPromoQtySold-BeforePromoQtySold)*base_price) AS TotalSaleDifference  
+ FROM fact_events JOIN dim_stores ON fact_events.store_id = dim_stores.store_id 
+ GROUP by dim_stores.city,fact_events.store_id ORDER by dim_stores.city,TotalSaleDifference DESC ;
+ 
+ --promotion activity by city
+ SELECT DISTINCT t2.city,promo_type,
+ count(event_id) OVER(PARTITION by city,promo_type) as no_of_trans
+ FROM prod_cat as t1 JOIN dim_stores as t2 on t1.store_id=t2.store_id ; 
+
+ 
+--  #below is mean of sales difference in city by no of stores; 
+ 
+ SELECT t1.city,TotalSaleDifference,total_stores,TotalSaleDifference/total_stores AS Mean
+ FROM 
+ (SELECT dim_stores.city,
+ SUM((AfterPromoQtySold-BeforePromoQtySold)*base_price) AS TotalSaleDifference  
+ FROM fact_events JOIN dim_stores ON fact_events.store_id = dim_stores.store_id 
+ GROUP by dim_stores.city ORDER by city) as t1
+ LEFT JOIN 
+ (SELECT city,COUNT(store_id) as total_stores FROM dim_stores GROUP by city) as t2
+ ON t1.city = t2.city
+ ORDER by Mean DESC;
+ 
+ </sql><sql name="performance analysis.sql">-- diiference in sales of stores id and their respective promotype 
+SELECT store_id,promo_type,after_total_sale-before_total_sale as diff_in_sale FROM
+(SELECT store_id,promo_type, SUM(BeforePromoQtySold*base_price)as before_total_sale, 
+SUM(AfterPromoQtySold*base_price)as after_total_sale 
+FROM fact_events GROUP by store_id,promo_type);
+
+--top 2 promotions Highest incremental value
+SELECT promo_type,after_total_sale-before_total_sale as diff_in_sale FROM
+(SELECT store_id,promo_type, SUM(BeforePromoQtySold*base_price)as before_total_sale, 
+SUM(AfterPromoQtySold*base_price)as after_total_sale 
+FROM fact_events GROUP by promo_type) ORDER BY diff_in_sale DESC LIMIT 2;
+
+-- bottom 2 promotion type Incremental Sold Units;
+SELECT promo_type,unit_after_sale-unit_before_sale as diff_in_units FROM
+(SELECT *,SUM(BeforePromoQtySold) as unit_before_sale,
+SUM(AfterPromoQtySold) as unit_after_sale 
+FROM fact_events GROUP BY promo_type) ORDER BY diff_in_units LIMIT 2;
+
+-- diff btwn diff promo type
+SELECT DISTINCT * FROM
+(SELECT promo_type,after_total_sale-before_total_sale as diff_in_sale FROM
+(SELECT store_id,promo_type, SUM(BeforePromoQtySold*base_price)as before_total_sale, 
+SUM(AfterPromoQtySold*base_price)as after_total_sale 
+FROM fact_events GROUP by promo_type)) as t1
+JOIN
+(SELECT promo_type,unit_after_sale-unit_before_sale as diff_in_units FROM
+(SELECT *,SUM(BeforePromoQtySold) as unit_before_sale,
+SUM(AfterPromoQtySold) as unit_after_sale 
+FROM fact_events GROUP BY promo_type)) AS t2
+ON
+t1.promo_type=t2.promo_type;
+
+-- the best balance striked promo can be seen by the times of return one productsold gives
+SELECT DISTINCT *, diff_in_sale/diff_in_units as times_return
+ FROM
+(SELECT promo_type,after_total_sale-before_total_sale as diff_in_sale FROM
+(SELECT store_id,promo_type, SUM(BeforePromoQtySold*base_price)as before_total_sale, 
+SUM(AfterPromoQtySold*base_price)as after_total_sale 
+FROM fact_events GROUP by promo_type)) as t1
+JOIN
+(SELECT promo_type,unit_after_sale-unit_before_sale as diff_in_units FROM
+(SELECT *,SUM(BeforePromoQtySold) as unit_before_sale,
+SUM(AfterPromoQtySold) as unit_after_sale 
+FROM fact_events GROUP BY promo_type)) AS t2
+ON
+t1.promo_type=t2.promo_type;
+
+-- % increase in units sold
+SELECT *,((unit_after_sale-unit_before_sale)/unit_before_sale)*100 FROM
+(SELECT promo_type,
+SUM(BeforePromoQtySold) as unit_before_sale,
+SUM(AfterPromoQtySold) as unit_after_sale
+FROM fact_events GROUP by promo_type);
+</sql><sql name="customer behavior">
+
+--category wise
+--find avg order size
+ SELECT *, sum(no_of_trans) OVER(PARTITION by category) as total_trans_by_category,
+ sum(totalSale) OVER(PARTITION by category) as category_sale FROM 
+ (select category,promo_type,count(event_id) as no_of_trans,
+ SUM(AfterPromoQtySold*base_price)as totalSale 
+ FROM prod_cat GROUP by category,promo_type) ;
+ 
+ --category wise
+ SELECT *,category_sale/total_trans as AOV FROM
+ (SELECT DISTINCT category, sum(no_of_trans) OVER(PARTITION by category) as total_trans,
+ sum(totalSale) OVER(PARTITION by category) as category_sale
+ FROM 
+ (select category,promo_type,count(event_id) as no_of_trans,SUM(AfterPromoQtySold*base_price)as totalSale
+ FROM prod_cat GROUP by category,promo_type)); 
+ 
+ --promo wise
+ SELECT *,promo_sale/total_trans as AOV FROM
+ (SELECT DISTINCT promo_type, sum(no_of_trans) OVER(PARTITION by promo_type) as total_trans,
+ sum(totalSale) OVER(PARTITION by promo_type) as promo_sale FROM 
+ (select promo_type,count(event_id) as no_of_trans,SUM(AfterPromoQtySold*base_price)as totalSale
+ FROM prod_cat GROUP by category,promo_type));</sql><sql name="prod_cat analysis.sql">--product category analysis
+CREATE TABLE prod_cat as
+SELECT * FROM fact_events 
+JOIN dim_products ON fact_events.product_code = dim_products.product_code;
+
+-- Most profitable category after promotion
+SELECT category,SUM(AfterPromoQtySold*base_price)as totalSale 
+FROM prod_cat GROUP BY category ORDER BY totalSale DESC;
+
+-- most profitable category in terms of difference btwn old and new sale
+SELECT *,(AftertotalSale-BeforetotalSale) as diff 
+FROM (SELECT category, SUM(BeforePromoQtySold*base_price)as BeforetotalSale,
+ SUM(AfterPromoQtySold*base_price)as AftertotalSale 
+ FROM prod_cat GROUP BY category) ORDER BY diff DESC;
+ 
+ -- specific products that did well or poorly
+SELECT *,(AftertotalSale-BeforetotalSale) as diff,
+(((AftertotalSale -BeforetotalSale)/BeforetotalSale)*100) || '%' as percentage_change  
+FROM (SELECT product_code,product_name, SUM(BeforePromoQtySold*base_price)as BeforetotalSale,
+ SUM(AfterPromoQtySold*base_price)as AftertotalSale 
+ FROM prod_cat GROUP BY product_code) ORDER BY diff DESC;
+
+  </sql><sql name="ad-hoc_requets.sql">
+
+-- List of product with price greater than 500 featured in 'BOGOF'
+SELECT DISTINCT product_code,product_name,category,base_price 
+FROM prod_cat WHERE base_price &gt; 500 and promo_type = 'BOGOF';
+
+--Number of stores in each city
+SELECT city,COUNT(store_id) as total_stores 
+FROM dim_stores GROUP by city ORDER BY total_stores DESC;
+
+
+--Campaign along with total revenue generated before and after promotion
+SELECT campaign_id,sum(base_price * BeforePromoQtySold) as total_rev_before,
+sum(base_price * AfterPromoQtySold) as total_rev_after 
+FROM fact_events GROUP by campaign_id;
+
+
+
+--Incremental Sold Quantity for each category during diwali campaign(from an edited table on excel )
+SELECT category,&quot;ISU%&quot;,rank() over(ORDER by &quot;ISU%&quot; desc) as rank_order FROM isu;
+
+
+--Top 5 product ranked by incremenatl revenue %
+
+CREATE TABLE ir_val as
+SELECT * FROM incremental_rev 
+JOIN dim_products ON incremental_rev.product_code = dim_products.product_code;
+
+SELECT product_code,product_name,category,&quot;ir%&quot;,rank() over(ORDER by &quot;ir%&quot; desc) as rank_order FROM ir_val limit 5;
+  
+
+</sql><sql name="SQL 8">
+-- correlation btwn promo type and category
+SELECT category,promo_type,
+SUM(AfterPromoQtySold*base_price)as totalSale 
+FROM prod_cat GROUP BY category,promo_type ORDER BY category,totalSale DESC ;
+ 
+
+ 
+-- correlation btwn promo type and product code
+SELECT product_code,promo_type,product_name,category,
+SUM(AfterPromoQtySold*base_price)as totalSale 
+FROM prod_cat GROUP BY product_code,promo_type ORDER BY product_code,totalSale DESC;
+ 
+ 
+ SELECT *, sum(no_of_trans) OVER(PARTITION by category) as total_trans,
+ sum(totalSale) OVER(PARTITION by category) as category_sale FROM 
+ (select category,promo_type,count(event_id) as no_of_trans,SUM(AfterPromoQtySold*base_price)as totalSale
+ FROM prod_cat GROUP by category,promo_type) ;
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
